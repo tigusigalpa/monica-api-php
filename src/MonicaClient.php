@@ -70,6 +70,7 @@ class MonicaClient
      */
     private const SUPPORTED_MODELS = [
         'OpenAI' => [
+            'gpt-5' => 'GPT-5',
             'gpt-4.1' => 'GPT-4.1',
             'gpt-4.1-mini' => 'GPT-4.1 Mini',
             'gpt-4.1-nano' => 'GPT-4.1 Nano',

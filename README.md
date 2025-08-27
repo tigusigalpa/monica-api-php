@@ -11,6 +11,7 @@ to multiple AI models from leading providers.
 
 - **Unified API Access**: Single interface to multiple AI providers (OpenAI, Anthropic, Google, DeepSeek, Meta, Grok,
   NVIDIA, Mistral)
+- **Latest AI Models**: Support for cutting-edge models including GPT-5, Claude 4, and Gemini 2.5
 - **Image Generation**: Support for FLUX, Stable Diffusion, DALL·E, Playground, and Ideogram models
 - **Type Safety**: Full PHP 8.1+ type declarations and strict typing
 - **Rich Documentation**: Comprehensive PHPDoc comments and examples
@@ -23,7 +24,8 @@ to multiple AI models from leading providers.
 
 | Provider      | Model                                    | Description                    | Image Input Support |
 |---------------|------------------------------------------|--------------------------------|---------------------|
-| **OpenAI**    | `gpt-4.1`                                | GPT-4.1 (Main model)           | ✅ Yes               |
+| **OpenAI**    | `gpt-5`                                  | GPT-5 (Latest flagship model)  | ✅ Yes               |
+|               | `gpt-4.1`                                | GPT-4.1 (Main model)           | ✅ Yes               |
 |               | `gpt-4.1-mini`                           | GPT-4.1 Mini (Lightweight)     | ✅ Yes               |
 |               | `gpt-4.1-nano`                           | GPT-4.1 Nano (Ultra-light)     | ✅ Yes               |
 |               | `gpt-4o`                                 | GPT-4o (With image support)    | ✅ Yes               |
@@ -97,8 +99,8 @@ use Tigusigalpa\MonicaApi\MonicaClient;
 use Tigusigalpa\MonicaApi\Exceptions\MonicaApiException;
 use Tigusigalpa\MonicaApi\Exceptions\InvalidModelException;
 
-// Initialize the client
-$client = new MonicaClient('your-monica-api-key', 'gpt-4.1');
+// Initialize the client with GPT-5 (latest flagship model)
+$client = new MonicaClient('your-monica-api-key', 'gpt-5');
 
 try {
     // Simple chat completion
@@ -119,7 +121,8 @@ try {
 ```php
 use Tigusigalpa\MonicaApi\MonicaClient;
 
-$client = new MonicaClient('your-api-key', 'gpt-4.1');
+// Use GPT-5 for the most advanced AI capabilities
+$client = new MonicaClient('your-api-key', 'gpt-5');
 
 $response = $client->chat('Explain quantum computing in simple terms');
 echo $response->getContent();
@@ -244,7 +247,8 @@ $response = $client->chatWithMessages($messages);
 
 ### Chat with Images (Vision Models)
 
-Vision-capable models like GPT-4o can analyze and discuss images. Here are examples of how to upload images to chat:
+Vision-capable models like GPT-5 and GPT-4o can analyze and discuss images. Here are examples of how to upload images to
+chat:
 
 #### Upload Image from File
 
@@ -254,7 +258,8 @@ Vision-capable models like GPT-4o can analyze and discuss images. Here are examp
 use Tigusigalpa\MonicaApi\MonicaClient;
 use Tigusigalpa\MonicaApi\Models\ChatMessage;
 
-$client = new MonicaClient('your-api-key', 'gpt-4o');
+// GPT-5 provides the most advanced image analysis capabilities
+$client = new MonicaClient('your-api-key', 'gpt-5');
 
 // Create a message with image from file
 $message = ChatMessage::userWithImage(
@@ -369,7 +374,8 @@ foreach ($images as $image) {
 
 The following models support image analysis:
 
-- **GPT-4o**: Best for detailed image analysis and understanding
+- **GPT-5**: Most advanced image analysis and understanding capabilities
+- **GPT-4o**: Excellent for detailed image analysis and understanding
 - **GPT-4o Mini**: Faster, cost-effective option for basic image tasks
 
 ### Creating Messages from Array Data
@@ -522,7 +528,7 @@ The `fromArray()` method supports the following message structure:
 
 use Tigusigalpa\MonicaApi\MonicaClient;
 
-$client = new MonicaClient('your-api-key', 'gpt-4.1');
+$client = new MonicaClient('your-api-key', 'gpt-5');
 
 // Generate a single image with FLUX
 $response = $client->generateImageSimple(
@@ -614,8 +620,8 @@ $response = $client->generateImageSimple(
 
 ```php
 // Check if a model is supported
-if ($client->isModelSupported('claude-3-haiku')) {
-    $client->setModel('claude-3-haiku');
+if ($client->isModelSupported('gpt-5')) {
+    $client->setModel('gpt-5');
 }
 
 // Get all supported models
@@ -744,7 +750,7 @@ class MonicaServiceProvider extends ServiceProvider
         $this->app->singleton(MonicaClient::class, function ($app) {
             return new MonicaClient(
                 config('services.monica.api_key'),
-                config('services.monica.default_model', 'gpt-4.1')
+                config('services.monica.default_model', 'gpt-5')
             );
         });
     }
@@ -757,7 +763,7 @@ class MonicaServiceProvider extends ServiceProvider
 // config/services.php
 'monica' => [
     'api_key' => env('MONICA_API_KEY'),
-    'default_model' => env('MONICA_DEFAULT_MODEL', 'gpt-4.1'),
+    'default_model' => env('MONICA_DEFAULT_MODEL', 'gpt-5'),
 ],
 ```
 
@@ -766,7 +772,7 @@ class MonicaServiceProvider extends ServiceProvider
 ```bash
 # .env
 MONICA_API_KEY=your-monica-api-key-here
-MONICA_DEFAULT_MODEL=gpt-4.1
+MONICA_DEFAULT_MODEL=gpt-5
 ```
 
 ### Controller Example
@@ -845,12 +851,15 @@ new MonicaClient(string $apiKey, string $model)
 
 - `chat(string $message, array $options = []): ChatCompletionResponse`
 - `chatWithMessages(ChatMessage[] $messages, array $options = []): ChatCompletionResponse`
+- `generateImage(ImageGeneration $imageGeneration): ImageGenerationResponse`
+- `generateImageSimple(string $model, string $prompt, array $options = []): ImageGenerationResponse`
 - `setModel(string $model): void`
 - `getModel(): string`
 - `isModelSupported(string $model): bool`
 - `static getSupportedModels(): array`
 - `static getModelsByProvider(string $provider): array`
 - `static getAllModelIds(): array`
+- `static getSupportedImageModels(): array`
 
 ### ChatMessage
 
@@ -859,6 +868,9 @@ new MonicaClient(string $apiKey, string $model)
 - `ChatMessage::system(string $content, ?string $name = null): ChatMessage`
 - `ChatMessage::user(string $content, ?string $name = null): ChatMessage`
 - `ChatMessage::assistant(string $content, ?string $name = null): ChatMessage`
+- `ChatMessage::userWithImage(string $content, string $imageUrl): ChatMessage`
+- `ChatMessage::userWithImages(string $content, array $imageUrls): ChatMessage`
+- `ChatMessage::fromArray(array $data): ChatMessage`
 
 #### Methods
 
@@ -868,6 +880,11 @@ new MonicaClient(string $apiKey, string $model)
 - `isSystem(): bool`
 - `isUser(): bool`
 - `isAssistant(): bool`
+- `hasImages(): bool`
+- `getImages(): array`
+- `addImageFromFile(string $filePath, string $detail = 'auto'): self`
+- `addImageFromUrl(string $url, string $detail = 'auto'): self`
+- `addImageFromBase64(string $base64Data, string $mimeType, string $detail = 'auto'): self`
 - `toArray(): array`
 
 ### ChatCompletionResponse
@@ -883,16 +900,22 @@ new MonicaClient(string $apiKey, string $model)
 - `isComplete(): bool`
 - `wasTruncated(): bool`
 - `wasFiltered(): bool`
+- `getFirstChoice(): ?array`
 - `getFirstChoiceAsMessage(): ?ChatMessage`
+- `getAllChoices(): array`
 
 ### ImageGeneration
 
 #### Constructor
 
-- `ImageGeneration(string $model, string $prompt)`
+```php
+new ImageGeneration(string $model, string $prompt)
+```
 
-#### Fluent Setters
+#### Methods
 
+- `getModel(): string`
+- `getPrompt(): string`
 - `setNegativePrompt(string $negativePrompt): self`
 - `setNumOutputs(int $numOutputs): self`
 - `setSize(string $size): self`
@@ -903,17 +926,12 @@ new MonicaClient(string $apiKey, string $model)
 - `setQuality(string $quality): self`
 - `setStyle(string $style): self`
 - `setAspectRatio(string $aspectRatio): self`
-- `setMagicPromptOption(string $magicPromptOption): self`
+- `setMagicPromptOption(string $option): self`
 - `setStyleType(string $styleType): self`
-- `setSafetyTolerance(int $safetyTolerance): self`
-
-#### Methods
-
-- `getModel(): string`
-- `getPrompt(): string`
+- `setSafetyTolerance(int $tolerance): self`
+- `static isModelSupported(string $model): bool`
+- `static getSupportedModels(): array`
 - `toArray(): array`
-- `getSupportedModels(): array`
-- `isModelSupported(string $model): bool`
 
 ### ImageGenerationResponse
 
@@ -921,18 +939,27 @@ new MonicaClient(string $apiKey, string $model)
 
 - `getImageUrls(): array`
 - `getFirstImageUrl(): ?string`
+- `saveFirstImage(string $filePath): bool`
+- `saveAllImages(string $directory, string $prefix = 'image_', string $extension = 'png'): array`
 - `getImageCount(): int`
-- `getImageData(int $index): ?array`
-- `getAllImageData(): array`
-- `hasImages(): bool`
-- `getRawResponse(): array`
-- `downloadImage(string $url): string|false`
-- `downloadFirstImage(): string|false`
-- `saveImage(string $url, string $filepath): bool`
-- `saveFirstImage(string $filepath): bool`
-- `saveAllImages(string $directory, string $prefix, string $extension): array`
-- `toArray(): array`
-- `toJson(int $flags): string`
+
+## 📝 Changelog
+
+### [Unreleased]
+
+#### Added
+
+- **GPT-5 Support**: Added support for OpenAI's latest flagship model `gpt-5`
+    - Full chat completion capabilities with advanced reasoning
+    - Enhanced image analysis and multimodal understanding
+    - Updated default model examples to showcase GPT-5
+    - Added GPT-5 to supported vision models list
+
+#### Changed
+
+- Updated Quick Start example to use GPT-5 as the default model
+- Enhanced Laravel integration examples with GPT-5 configuration
+- Updated model comparison tables to highlight GPT-5 capabilities
 
 ## 🤝 Contributing
 
@@ -944,8 +971,8 @@ discuss what you would like to change.
 1. Clone the repository
 2. Install dependencies: `composer install`
 3. Run tests: `composer test`
-4. Check code style: `composer cs:check`
-5. Fix code style: `composer cs:fix`
+4. Check code style: `composer cs-check`
+5. Fix code style: `composer cs-fix`
 
 ## 📄 License
 
@@ -954,22 +981,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Links
 
 - [Monica API Platform](https://platform.monica.im/)
-- [Monica API Documentation](https://platform.monica.im/docs/en/overview)
-- [Available Models](https://platform.monica.im/docs/en/models-and-pricing)
-- [Chat API Reference](https://platform.monica.im/docs/en/chat/chat)
+- [API Documentation](https://platform.monica.im/docs/en/overview)
+- [GitHub Repository](https://github.com/tigusigalpa/monica-api-php)
+- [Packagist](https://packagist.org/packages/tigusigalpa/monica-api-php)
 
-## 👨‍💻 Author
+## 💬 Support
 
-**Igor Sazonov**
+If you have any questions or need help, please:
 
-- GitHub: [@tigusigalpa](https://github.com/tigusigalpa)
-- Email: sovletig@gmail.com
+1. Check the [documentation](https://platform.monica.im/docs/en/overview)
+2. Search existing [GitHub issues](https://github.com/tigusigalpa/monica-api-php/issues)
+3. Create a new issue if needed
 
 ## 🙏 Acknowledgments
 
-- Monica API Platform team for providing an excellent AI aggregation service
-- The PHP community for continuous innovation and support
-
----
-
-Made with ❤️ by [Igor Sazonov](https://github.com/tigusigalpa)
+- [Monica API Platform](https://platform.monica.im/) for providing the unified AI API
+- All the AI providers (OpenAI, Anthropic, Google, etc.) for their amazing models
+- The PHP community for excellent tools and libraries
