@@ -4,6 +4,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Latest Version](https://img.shields.io/github/v/release/tigusigalpa/monica-api-php)](https://github.com/tigusigalpa/monica-api-php/releases)
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/0ca1fc1f-0e64-415f-9fd1-ecdca727499a" alt="Monica AI PHP SDK" style="max-width: 100%; height: auto;">
+</div>
+
 A powerful and elegant PHP client library for [Monica API Platform](https://platform.monica.im/) - your unified gateway
 to multiple AI models from leading providers.
 
