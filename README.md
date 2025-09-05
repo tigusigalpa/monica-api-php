@@ -1,4 +1,4 @@
-# Monica AI API PHP Client
+# Monica AI API PHP Client/SDK
 
 [![PHP Version](https://img.shields.io/badge/php-%5E8.1-blue.svg)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -8,7 +8,7 @@
   <img src="https://github.com/user-attachments/assets/0ca1fc1f-0e64-415f-9fd1-ecdca727499a" alt="Monica AI PHP SDK" style="max-width: 100%; height: auto;">
 </div>
 
-A powerful and elegant PHP client library for [Monica API Platform](https://platform.monica.im/) - your unified gateway
+A powerful and elegant PHP client (SDK) library for [Monica API Platform](https://platform.monica.im/) - your unified gateway
 to multiple AI models from leading providers.
 
 ## 🚀 Features
