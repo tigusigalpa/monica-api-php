@@ -1,4 +1,4 @@
-# Monica API PHP Client
+# Monica AI API PHP Client
 
 [![PHP Version](https://img.shields.io/badge/php-%5E8.1-blue.svg)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -83,14 +83,14 @@ to multiple AI models from leading providers.
 Install via Composer:
 
 ```bash
-composer require tigusigalpa/monica-api-php
+composer require tigusigalpa/-api-php
 ```
 
 ## 🔧 Requirements
 
 - PHP 8.1 or higher
 - Guzzle HTTP 7.0+
-- Monica API key ([Get yours here](https://platform.monica.im/))
+- Monica AI API key ([Get yours here](https://platform.monica.im/))
 
 ## 🚀 Quick Start
 
