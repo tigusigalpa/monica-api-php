@@ -83,7 +83,7 @@ to multiple AI models from leading providers.
 Install via Composer:
 
 ```bash
-composer require tigusigalpa/-api-php
+composer require tigusigalpa/monica-api-php
 ```
 
 ## 🔧 Requirements
